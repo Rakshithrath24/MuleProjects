@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+    <sub-flow name="decision2SubFlow">
+        <set-variable variableName="decisionVariable" value="#['decision2']" doc:name="DecisionVariable2"/>
+    </sub-flow>
+    <sub-flow name="decision1SubFlow">
+        <set-variable variableName="decisionVariable" value="#['decision1']" doc:name="DecisionVariable1"/>
+    </sub-flow>
+    <flow name="munittestFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/test" doc:name="HTTP"/>
+        <set-payload value="#[message.inboundProperties.'http.query.params'.['decisionkey']]" doc:name="SetDecisionKey"/>
+        <flow-ref name="decisionFlow" doc:name="decisionFlow"/>
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.decisionVariable.equals('decision1')]">
+                <set-payload value="#['Decision Pattern1 is Selected']" doc:name="Pattern1"/>
+            </when>
+            <otherwise>
+                <set-payload value="#['Decision Pattern2 is Selected']" doc:name="Pattern2"/>
+            </otherwise>
+        </choice>
+    </flow>
+    <flow name="decisionFlow">
+        <choice doc:name="Choice">
+            <when expression="#['value1'.equals(payload)]">
+                <flow-ref name="decision1SubFlow" doc:name="Flow Reference1"/>
+            </when>
+            <otherwise>
+                <flow-ref name="decision2SubFlow" doc:name="Flow Reference2"/>
+            </otherwise>
+        </choice>
+    </flow>
+    <flow name="messageFilterFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/filter" doc:name="HTTP"/>
+        <message-filter throwOnUnaccepted="true" doc:name="Message">
+            <regex-filter pattern="^[a-zA-Z]$"/>
+        </message-filter>
+        <file:outbound-endpoint path="src/test/resources/out" responseTimeout="10000" doc:name="File"/>
+        <catch-exception-strategy doc:name="Catch Exception Strategy">
+            <set-payload value="#['Invalid text!']" doc:name="Set Payload"/>
+            <set-property propertyName="http.status" value="400" doc:name="Property"/>
+            <logger level="INFO" doc:name="Logger"/>
+        </catch-exception-strategy>
+    </flow>
+</mule>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+    <db:mysql-config name="MySQL_Configuration" host="${db.host}" port="${db.port}" user="${db.user}" password="${db.password}" database="${db.database}" doc:name="MySQL Configuration"/>
+    <flow name="getFlightsFlow">
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[select *
+from flights]]></db:parameterized-query>
+        </db:select>
+        <dw:transform-message doc:name="Transform Message" metadata:id="b08d2a86-7497-40b7-b312-00dfbb9a0589">
+            <dw:input-payload doc:sample="sample_data\list_map_1.dwl"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload map ((payload01 , indexOfPayload01) -> {
+	ID: payload01.id,
+	code: payload01.code,
+	price: payload01.price,
+	departureDate: payload01.departuredate as :string,
+	origin: payload01.origin,
+	destination: payload01.destination,
+	emptySeats: payload01.emptyseats,
+	plane: {
+		type: payload01.type,
+		totalSeats: payload01.totalseats
+	}
+})]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="getFlightsByIdFLow">
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[select *
+from flights
+where ID=#[flowVars.ID]]]></db:parameterized-query>
+        </db:select>
+        <dw:transform-message doc:name="Transform Message" metadata:id="b08d2a86-7497-40b7-b312-00dfbb9a0589">
+            <dw:input-payload doc:sample="sample_data\list_map_1.dwl"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload map ((payload01 , indexOfPayload01) -> {
+	ID: payload01.id,
+	code: payload01.code,
+	price: payload01.price,
+	departureDate: payload01.departuredate as :string,
+	origin: payload01.origin,
+	destination: payload01.destination,
+	emptySeats: payload01.emptyseats,
+	plane: {
+		type: payload01.type,
+		totalSeats: payload01.totalseats
+	}
+})]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="postFlightsFlow">
+        <json:json-to-object-transformer returnClass="java.util.HashMap" doc:name="JSON to Object"/>
+        <db:insert config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[insert into flights values (#[payload.id],#[payload.code],#[payload.price],#[payload.departureDate],#[payload.origin],#[payload.destination],#[payload.emptySeats],#[payload.type],#[payload.totalSeats])]]></db:parameterized-query>
+        </db:insert>
+        <set-payload value="Data Inserted Successfully!" doc:name="Set Payload"/>
+    </flow>
+    <flow name="ImplimentationFlow">
+        <poll doc:name="Poll">
+            <fixed-frequency-scheduler frequency="10" timeUnit="HOURS"/>
+            <db:select config-ref="MySQL_Configuration" doc:name="Database">
+                <db:parameterized-query><![CDATA[select * from flights]]></db:parameterized-query>
+            </db:select>
+        </poll>
+        <file:outbound-endpoint path="D:\FlightsDestination" responseTimeout="10000" doc:name="File"/>
+    </flow>
+</mule>

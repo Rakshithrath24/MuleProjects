@@ -1,0 +1,83 @@
+2017-12-26 10:58:20,053 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'example'                               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-26 10:58:20,225 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-26 10:58:20,334 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-26 10:58:20,444 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-26 10:58:20,444 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.8)
+2017-12-26 10:58:20,506 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@544630b7: startup date [Tue Dec 26 10:58:20 IST 2017]; root of context hierarchy
+2017-12-26 10:58:21,538 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-26 10:58:22,227 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2017-12-26 10:58:22,805 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs C:\Users\EAI\AnypointStudio\workspace\.mule\.\.mule\example\queue-tx-log\tx1.log and C:\Users\EAI\AnypointStudio\workspace\.mule\.\.mule\example\queue-tx-log\tx2.log
+2017-12-26 10:58:22,811 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs C:\Users\EAI\AnypointStudio\workspace\.mule\.\.mule\example\queue-xa-tx-log\tx1.log and C:\Users\EAI\AnypointStudio\workspace\.mule\.\.mule\example\queue-xa-tx-log\tx2.log
+2017-12-26 10:58:22,889 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-26 10:58:22,889 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: exampleFlow
+2017-12-26 10:58:22,889 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@d16be4f
+2017-12-26 10:58:22,920 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: exampleFlow.stage1
+2017-12-26 10:58:23,155 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='C:\Users\EAI\AnypointStudio\workspace\.mule\apps\example\example.xml'}]"
+2017-12-26 10:58:23,155 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='C:\Users\EAI\AnypointStudio\workspace\.mule\apps\example\example.xml'}]"
+2017-12-26 10:58:26,186 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'example'                                   +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-26 10:58:26,195 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-26 10:58:26,195 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-26 10:58:26,288 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8081
+2017-12-26 10:58:26,304 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-26 10:58:26,304 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-26 10:58:26,304 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: exampleFlow
+2017-12-26 10:58:26,304 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: exampleFlow.stage1
+2017-12-26 10:58:26,335 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-26 10:58:26,351 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: example                                               *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Batch module default engine                                      *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-26 11:00:55,201 [[example].HTTP_Listener_Configuration.worker.01] INFO  org.mule.api.processor.LoggerMessageProcessor - 
+org.mule.DefaultMuleMessage
+{
+  id=f1d86d60-e9fd-11e7-921f-7c5cf866ed25
+  payload=org.mule.transport.NullPayload
+  correlationId=<not set>
+  correlationGroup=-1
+  correlationSeq=-1
+  encoding=UTF-8
+  exceptionPayload=<not set>
+
+Message properties:
+  INVOCATION scoped properties:
+  INBOUND scoped properties:
+    accept=text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+    accept-encoding=gzip, deflate, br
+    accept-language=en-US,en;q=0.9
+    connection=keep-alive
+    host=localhost:8081
+    http.listener.path=/
+    http.method=GET
+    http.query.params=ParameterMap{[]}
+    http.query.string=
+    http.relative.path=/
+    http.remote.address=/127.0.0.1:54341
+    http.request.path=/
+    http.request.uri=/
+    http.scheme=http
+    http.uri.params=ParameterMap{[]}
+    http.version=HTTP/1.1
+    upgrade-insecure-requests=1
+    user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36
+  OUTBOUND scoped properties:
+  SESSION scoped properties:
+}
+2017-12-26 11:00:55,461 [[example].HTTP_Listener_Configuration.worker.01] INFO  org.mule.module.http.internal.listener.HttpListenerRegistry - No listener found for request: (GET)/favicon.ico
+2017-12-26 11:00:55,461 [[example].HTTP_Listener_Configuration.worker.01] INFO  org.mule.module.http.internal.listener.HttpListenerRegistry - Available listeners are: [(*)/]

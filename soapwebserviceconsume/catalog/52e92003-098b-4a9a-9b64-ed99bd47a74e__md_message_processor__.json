@@ -1,0 +1,17 @@
+{
+    "inputMessageMetadata": {
+        "flowVariables": {
+            "a": {
+                "connectorName": "Web_Service_Consumer",
+                "typeId": "addTwoNum"
+            },
+            "b": {
+                "connectorName": "Web_Service_Consumer",
+                "typeId": "addTwoNum"
+            }
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "52e92003-098b-4a9a-9b64-ed99bd47a74e",
+    "version": "5.2.0.0"
+}
