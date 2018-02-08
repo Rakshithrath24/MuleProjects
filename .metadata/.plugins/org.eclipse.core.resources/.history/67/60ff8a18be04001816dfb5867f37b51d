@@ -1,0 +1,11 @@
+<html>
+	<head>
+		<title>ValidateUser</title>
+	<head>
+	<body>
+		<form action="/validateUser" method="get">
+			AGE:<input type="number" name="age">
+			<input type="submit" value="Submit">
+		</form>
+	</body>
+</html>

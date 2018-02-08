@@ -1,7 +1,5 @@
 package com.mulesoft.training;
 
-import java.util.Comparator;
-
 public class Flight implements java.io.Serializable, Comparable<Flight> {
 
 	String flightCode;

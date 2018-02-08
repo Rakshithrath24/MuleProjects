@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <http:listener-config name="HTTP_Listener_Configuration1" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <flow name="datawaverFlow">
+        <dw:transform-message doc:name="Transform Message" metadata:id="5786fe25-8159-47bb-8e3c-a8e26667d3ba">
+            <dw:input-payload doc:sample="C:\Users\EAI\Downloads\test_json.json" mimeType="application/json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload map
+{	
+	num: $$,
+	fname: $.firstname,
+	lname: $.lastname
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="datawaverFlow1">
+        <dw:transform-message doc:name="Transform Message" metadata:id="e3fca5d3-3eb8-4e76-9f70-d5b68317127a">
+            <dw:input-payload doc:sample="C:\Users\EAI\Downloads\test_json.json" mimeType="application/json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+users: payload map {
+	user: {
+		fname: $.firstname,
+		lname: $.lastname
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="datawaverFlow2">
+        <dw:transform-message doc:name="Transform Message" metadata:id="97fd1519-78d1-45f7-9b9f-5dbbe1d71fa6">
+            <dw:input-payload doc:sample="C:\Users\EAI\Downloads\test_json.json" mimeType="application/json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload map {
+	num: $$,
+	($$): $
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="datawaverFlow3">
+        <dw:transform-message doc:name="Transform Message" metadata:id="480dc72b-e0ad-478b-a7c1-7f30fbf726a7">
+            <dw:input-payload doc:sample="C:\Users\EAI\Downloads\test_json.json" mimeType="application/json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload map {
+	num: $$,
+	'$$': $
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+</mule>

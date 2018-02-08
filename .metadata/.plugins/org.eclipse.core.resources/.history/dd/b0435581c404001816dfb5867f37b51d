@@ -1,0 +1,8 @@
+package votervalidation;
+
+public class InvalidVoter extends RuntimeException 
+{
+	public InvalidVoter() {
+		// TODO Auto-generated constructor stub
+	}
+}

@@ -1,0 +1,6 @@
+package votervalidation;
+
+public class InvalidVoter extends RuntimeException
+{
+
+}

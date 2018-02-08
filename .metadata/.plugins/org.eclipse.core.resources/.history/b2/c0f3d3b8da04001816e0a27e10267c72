@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <flow name="votervalidationFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/validate" doc:name="HTTP"/>
+        <parse-template location="src/main/resources/Validate.html" doc:name="Parse Template"/>
+    </flow>
+    <flow name="validateUserFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/validateUser" doc:name="HTTP"/>
+        <validation:is-true message="#['Sorry! Not a vlid voter!']" expression="#[message.inboundProperties.'http.query.params'.age &gt;=18]" doc:name="Validation"/>
+        <set-payload value="#['Congrats! you are eligible to cast vote!']" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

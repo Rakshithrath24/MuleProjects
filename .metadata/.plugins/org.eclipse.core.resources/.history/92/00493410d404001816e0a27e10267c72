@@ -1,0 +1,5 @@
+package votervalidation;
+
+public class InvalidVoter {
+
+}

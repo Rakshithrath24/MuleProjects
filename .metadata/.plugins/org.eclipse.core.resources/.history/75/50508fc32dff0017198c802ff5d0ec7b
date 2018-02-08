@@ -1,0 +1,5 @@
+package com.eai.model;
+
+public class Employee {
+
+}
